@@ -1,0 +1,143 @@
+{
+    "results": [
+        {
+            "percentile": 50,
+            "terms": [
+                {
+                    "value": 147875.38,
+                    "income": 76250,
+                    "target": 0,
+                    "lumpSum": 0,
+                    "tax": 0,
+                    "term": 9
+                },
+                {
+                    "value": 149742.94,
+                    "income": 1250,
+                    "target": 0,
+                    "lumpSum": 0,
+                    "tax": 0,
+                    "term": 10
+                },
+                {
+                    "value": 148384.86,
+                    "income": 0,
+                    "target": 0,
+                    "lumpSum": 0,
+                    "tax": 0,
+                    "term": 11
+                },
+                {
+                    "value": 150347.3,
+                    "income": 6073.35,
+                    "target": 0,
+                    "lumpSum": 0,
+                    "tax": 0,
+                    "term": 12
+                },
+                {
+                    "value": 57744.17,
+                    "income": 15744.27,
+                    "target": 0,
+                    "lumpSum": 57744.17,
+                    "tax": 0,
+                    "term": 13
+                },
+                {
+                    "value": 0,
+                    "income": 17656.94,
+                    "target": 15528.92,
+                    "lumpSum": 0,
+                    "tax": 0,
+                    "term": 14
+                },
+                {
+                    "value": 0,
+                    "income": 17656.94,
+                    "target": 15550,
+                    "lumpSum": 0,
+                    "tax": 0,
+                    "term": 15
+                },
+                {
+                    "value": 0,
+                    "income": 17656.95,
+                    "target": 15550,
+                    "lumpSum": 0,
+                    "tax": 0,
+                    "term": 16
+                },
+                {
+                    "value": 0,
+                    "income": 25981.95,
+                    "target": 15550,
+                    "lumpSum": 0,
+                    "tax": 0,
+                    "term": 17
+                },
+                {
+                    "value": 0,
+                    "income": 25981.94,
+                    "target": 15550,
+                    "lumpSum": 0,
+                    "tax": 0,
+                    "term": 18
+                },
+                {
+                    "value": 0,
+                    "income": 25981.94,
+                    "target": 15550,
+                    "lumpSum": 0,
+                    "tax": 0,
+                    "term": 19
+                }
+            ]
+        }
+    ],
+    "chanceOfBeatingTargetResults": [
+        {
+            "term": 9,
+            "chance": 95
+        },
+        {
+            "term": 10,
+            "chance": 95
+        },
+        {
+            "term": 11,
+            "chance": 95
+        },
+        {
+            "term": 12,
+            "chance": 95
+        },
+        {
+            "term": 13,
+            "chance": 95
+        },
+        {
+            "term": 14,
+            "chance": 81
+        },
+        {
+            "term": 15,
+            "chance": 80
+        },
+        {
+            "term": 16,
+            "chance": 80
+        },
+        {
+            "term": 17,
+            "chance": 95
+        },
+        {
+            "term": 18,
+            "chance": 95
+        },
+        {
+            "term": 19,
+            "chance": 95
+        }
+    ]
+}

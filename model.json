@@ -1,0 +1,184 @@
+{
+    "user": {
+        "dateOfBirth": "1965-01-01",
+        "gender": "MALE",
+        "stateBenefit": {
+            "include": true,
+            "amount": 8325
+        },
+        "salary": 50000,
+        "salaryIncrease": {
+            "basis": "RPI",
+            "rate": 0
+        },
+        "spouse": {
+            "dateOfBirth": "1969-01-01",
+            "gender": "FEMALE",
+            "stateBenefit": {
+                "include": true,
+                "amount": 8325
+            }
+        }
+    },
+    "assets": [
+        {
+            "typeReference": "PCPension",
+            "contributions": {
+                "amount": 500,
+                "frequency": "MONTHLY",
+                "increase": {
+                    "basis": "RPI",
+                    "rate": 0
+                },
+                "taxBasis": "GROSS",
+                "percentage": false,
+                "startDate": "2019-01-01",
+                "stopDate": "2025-01-01",
+                "employerAmount": 0
+            },
+            "initialCharges": {
+                "percentage": 0,
+                "amount": 0,
+                "contributionPercentage": 0
+            },
+            "annualCharges": {
+                "amount": 0,
+                "tieredCharges": [
+                    {
+                        "percentage": 0.45,
+                        "upperLimit": 50000
+                    },
+                    {
+                        "percentage": 0.25
+                    }
+                ]
+            },
+            "funds": [
+                {
+                    "code": "KEBA",
+                    "balance": 100000,
+                    "contributionPercentage": 80,
+                    "adjustment": 0.1
+                },
+                {
+                    "code": "G6HZ",
+                    "balance": 25000,
+                    "contributionPercentage": 20,
+                    "adjustment": 0.25
+                }
+            ],
+            "annuity": {
+                "pensionIncrease": {
+                    "basis": "RPI",
+                    "rate": 0
+                },
+                "spousePercentage": 50,
+                "guaranteePeriod": 5,
+                "purchaseDate": "2033-01-01"
+            },
+            "partialAnnuity": {
+                "pensionIncrease": {
+                    "basis": "RPI",
+                    "rate": 0
+                },
+                "spousePercentage": 50,
+                "guaranteePeriod": 5,
+                "purchaseDate": "2032-01-01",
+                "proportion": 25
+            },
+            "lumpSum": {
+                "date": "2033-01-01",
+                "percentage": 50
+            }
+        }
+    ],
+    "definedBenefits": [
+        {
+            "income": 10000,
+            "todaysPrices": false,
+            "startDate": "2031-01-01",
+            "incomeIncrease": {
+                "basis": "RPI",
+                "rate": 0
+            }
+        }
+    ],
+    "targetOptions": {
+        "target": 15000,
+        "increase": {
+            "basis": "RPI",
+            "rate": 0
+        },
+        "taxBasis": "GROSS"
+    },
+    "forecastOptions": {
+        "terms": [
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16,
+            17,
+            18,
+            19
+        ],
+        "todaysPrices": true,
+        "todaysPricesIndex": "RPI",
+        "percentiles": [
+            50
+        ],
+        "retirementDate": "2033-01-01",
+        "taxBasis": "GROSS",
+        "taxOptions": {
+            "region": "UK"
+        }
+    },
+    "properties": [
+        {
+            "mainResidence": true,
+            "currentValue": 75000,
+            "valueIncrease": {
+                "basis": "RPI",
+                "rate": 0
+            },
+            "futureSaleDate": "2028-01-01",
+            "purchasePrice": 0,
+            "rental": {
+                "income": 0,
+                "increase": {
+                    "basis": "RPI",
+                    "rate": 0
+                }
+            }
+        }
+    ],
+    "otherIncomes": [
+        {
+            "value": 1250,
+            "todaysPrices": true,
+            "startDate": "2019-01-15",
+            "endDate": "2030-01-01",
+            "increase": {
+                "basis": "RPI",
+                "rate": 0
+            },
+            "taxEligible": true
+        }
+    ],
+    "targets": [
+        {
+            "value": 550,
+            "increase": {
+                "basis": "RPI",
+                "rate": 0
+            },
+            "taxBasis": "GROSS",
+            "frequency": "ANNUALLY",
+            "startDate": "2033-01-15",
+            "endDate": "2053-01-15"
+        }
+    ]
+}
