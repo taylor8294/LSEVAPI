@@ -408,8 +408,8 @@ $(document).ready(function() {
             "sec-fetch-mode":"cors",
             //"sec-fetch-site":"same-site"
           },
-          //"referrer":"https://api-store.evalueproduction.com/store/apis/info?name=RetirementForecastAdvanced&version=1.0.1&provider=EValue",
-          "referrerPolicy":"no-referrer-when-downgrade",
+          "referrer":"", // no referer header
+          "referrerPolicy":"no-referrer",
           "body":JSON.stringify(requestObj),
           "method":"POST",
           //"mode":"cors"
