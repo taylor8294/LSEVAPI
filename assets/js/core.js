@@ -119,7 +119,7 @@ $(document).ready(function() {
     let $formGroup = $(this).closest('.form-group'),
       $input = $formGroup.find('[name*="amount"]');
     if($input.is(':disabled')){
-      $input.val('8767.20');
+      $input.val(isNaN($input.attr('placeholder')) ? '9660.86' : $input.attr('placeholder'));
       $input.prop('disabled',false);
     } else {
       $input.val('');
