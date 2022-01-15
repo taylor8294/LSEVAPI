@@ -1,4 +1,11 @@
 /**
+ * Original RetirementForecastAdvanced URLs
+ *   Page:    https://api-store.evalueproduction.com/store/apis/info?name=RetirementForecastAdvanced&version=1.0.1&provider=EValue
+ *   API doc: https://api-store.evalueproduction.com/store/site/pages/doc-viewer.jag?docName=API%20Document&name=RetirementForecastAdvanced&version=1.0.1&provider=EValue&
+ *   How-to:  https://api-store.evalueproduction.com/store/site/pages/doc-viewer.jag?docName=How-To&name=RetirementForecastAdvanced&version=1.0.1&provider=EValue&
+ */
+
+/**
  *
  */
 let hexToRgba = function(hex, opacity) {
@@ -30,6 +37,8 @@ $(document).ready(function() {
   /** Function for remove card */
   $('[data-toggle="card-remove"]').on('click', function(e) {
     let $card = $(this).closest(DIV_CARD);
+
+    if($card.attr('aria-describedby')) $('#'+$card.attr('aria-describedby')).remove();
 
     $card.remove();
 
@@ -84,7 +93,7 @@ $(document).ready(function() {
         });
       });
     });
-  }
+  }*/
 
   /**  
   if ($('.chart-circle').length) {
@@ -138,26 +147,24 @@ $(document).ready(function() {
   });
 
   /** Function for add asset */
-  let numAssetTabs = $('#assetTabTemplate').siblings('.tab-pane').length;
   $('[data-toggle="asset-add"]').on('click', function(e) {
-    let $tabsArea = $(this).parent().next().find('.tabs-content').first(),
+    let maxAssetNum = Math.max(...Array.from($('#assetTabButtons > .list-group')).map(n => +$(n).find('a')[0].innerText.trim().split(' ')[1])),
+      $tabsArea = $(this).parent().next().find('.tabs-content').first(),
       tabTemplateHtml = $('#assetTabTemplate').html(),
-      newTabHtml = tabTemplateHtml.replace(/##NUM##/g,numAssetTabs).replace(/##NUM\+1##/g,numAssetTabs+1),
+      newTabHtml = tabTemplateHtml.replace(/##NUM##/g,maxAssetNum).replace(/##NUM\+1##/g,maxAssetNum+1),
       $newTab = $(newTabHtml);
-
+    
     $tabsArea.append($newTab);
     $tabsArea.children('.tab-pane.active').removeClass('active');
     $newTab.addClass('active');
 
     let $tabBtnsArea = $(this).next(),
       tabBtnTemplateHtml = $('#assetTabBtnTemplate').html(),
-      newTabBtnHtml = tabBtnTemplateHtml.replace(/##NUM##/g,numAssetTabs).replace(/##NUM\+1##/g,numAssetTabs+1),
+      newTabBtnHtml = tabBtnTemplateHtml.replace(/##NUM##/g,maxAssetNum).replace(/##NUM\+1##/g,maxAssetNum+1),
       $newTabBtn = $(newTabBtnHtml);
     $tabBtnsArea.append($newTabBtn);
     $tabBtnsArea.find('.list-group-item.active').removeClass('active');
     $newTabBtn.find('.list-group-item').addClass('active');
-
-    numAssetTabs=numAssetTabs+1;
 
     e.preventDefault();
     return false;
@@ -180,8 +187,6 @@ $(document).ready(function() {
       $tabBtn.prev().find('.list-group-item').addClass('active');
     }
     $tabBtn.remove();
-
-    //numTabs=numTabs-1;
 
     e.preventDefault();
     return false;
@@ -216,20 +221,20 @@ $(document).ready(function() {
 
   /** Function for cont fixed/pc change */
   $('body').on('change', '[data-toggle="cont-fixed-pc"]', function(e) {
-    let $inputGroup = $(this).closest('.form-group').next().find('.input-group');
-    if($inputGroup.length){
-      let $fixed = $inputGroup.find('.input-group-prepend'), $pc = $inputGroup.find('.input-group-append');
-      if($fixed.is(':visible')){
-        $fixed.hide();
-        $pc.show();
-      } else {
-        $fixed.show();
-        $pc.hide();
-      }
+    let $row = $(this).closest('.form-group').parent(),
+        $taxBasis = $row.find('[value="GROSS"]').closest('.form-group'),
+        $inputGroups = $row.find('.input-group-prepend').parent();
+    if(truthyVal($(this).val())){
+      $taxBasis.hide();
+      $inputGroups.find('.input-group-prepend').hide();
+      $inputGroups.find('.input-group-append').show();
+    } else {
+      $taxBasis.show();
+      $inputGroups.find('.input-group-prepend').show();
+      $inputGroups.find('.input-group-append').hide();
     }
-
-    e.preventDefault();
-    return false;
+    //e.preventDefault();
+    //return false;
   });
 
   /** Function for adding charge tier */
@@ -385,6 +390,61 @@ $(document).ready(function() {
     // e.preventDefault();
     // return false;
   });
+  
+  /** Function for adding an income */
+  $('[data-toggle="income-add"]').on('click', function(e) {
+    let maxIncomeNum = $('#incomeTabButtons > .list-group').length ? Math.max(...Array.from($('#incomeTabButtons > .list-group')).map(n => +$(n).find('a')[0].innerText.trim().split(' ')[1])) : 0,
+      $tabsArea = $(this).parent().next().find('.tabs-content').first(),
+      tabTemplateHtml = $('#incomeTabTemplate').html(),
+      newTabHtml = tabTemplateHtml.replace(/##NUM##/g,maxIncomeNum).replace(/##NUM\+1##/g,maxIncomeNum+1),
+      $newTab = $(newTabHtml);
+    
+    $tabsArea.append($newTab);
+    $tabsArea.children('.tab-pane.active').removeClass('active');
+    $newTab.addClass('active');
+
+    let $tabBtnsArea = $(this).next(),
+      tabBtnTemplateHtml = $('#incomeTabBtnTemplate').html(),
+      newTabBtnHtml = tabBtnTemplateHtml.replace(/##NUM##/g,maxIncomeNum).replace(/##NUM\+1##/g,maxIncomeNum+1),
+      $newTabBtn = $(newTabBtnHtml);
+    $tabBtnsArea.append($newTabBtn);
+    $tabBtnsArea.find('.list-group-item.active').removeClass('active');
+    $newTabBtn.find('.list-group-item').addClass('active');
+
+    e.preventDefault();
+    return false;
+  });
+
+  /** Function for removing an income */
+  $('body').on('click', '[data-toggle="income-remove"]', function(e) {
+    let tabId = $(this).data('toggle-target');
+    if(tabId){
+      let $tab = $('#'+tabId);
+      if($tab.hasClass('active')){
+        $tab.removeClass('active').prev().addClass('active')
+      }
+      $tab.remove();
+    }
+
+    let $tabBtn = $(this).parent();
+    if($tabBtn.find('.list-group-item').hasClass('active')){
+      $tabBtn.find('.list-group-item').removeClass('active');
+      $tabBtn.prev().find('.list-group-item').addClass('active');
+    }
+    $tabBtn.remove();
+
+    e.preventDefault();
+    return false;
+  });
+
+  
+  /** On change event store access token in localStorage to prefill across page loads */
+  $('#accessToken').on('change', function(e) {
+    let t = localStorage.getItem('accessToken'), v = $(this).val();
+    if(!t) localStorage.setItem('accessToken',v);
+    else if(v.length >= Math.min(t.length,36)) localStorage.setItem('accessToken',v);
+  });
+  $('#accessToken').val(localStorage.getItem('accessToken'));
 
   /** Submit click */
   $('#pfpBtn,#pcBtn').on('click', function(e) {
@@ -396,23 +456,26 @@ $(document).ready(function() {
         pfp = $(this).attr('id') === 'pfpBtn' ? true : false;
       console.log(requestObj);
       if(accessToken && !requestObj.err){
-        fetch("https://api.evalueproduction.com/retirementAdvanced/1.0.1/retirementAdvanced/forecast", {
-          //"credentials":"include",
-          "headers":{
-            "accept":"application/json",
-            "accept-language":"en-US,en;q=0.9",
-            "authorization":"Bearer "+accessToken,
-            //"cache-control":"no-cache",
-            "content-type":"application/json",
-            //"pragma":"no-cache",
-            "sec-fetch-mode":"cors",
-            //"sec-fetch-site":"same-site"
+        let apiUrl = $('.page-title').text().trim()=='RetirementForecastAdvanced' ?
+          'https://api.evalueproduction.com/retirementAdvanced/1.0.1/retirementAdvanced/forecast' :
+          'https://api.evalueproduction.com/retirement/1.0.0/retirementForecast/forecast';
+        fetch(apiUrl, {
+          "headers": {
+            "accept": "application/json",
+            "accept-language": "en-GB,en-US;q=0.9,en;q=0.8",
+            "authorization": "Bearer "+accessToken,
+            //"cache-control": "no-cache",
+            "content-type": "application/json",
+            //"pragma": "no-cache",
+            "sec-fetch-mode": "cors",
+            //"sec-fetch-site": "same-site"
           },
-          "referrer":"", // no referer header
-          "referrerPolicy":"no-referrer",
-          "body":JSON.stringify(requestObj),
-          "method":"POST",
-          //"mode":"cors"
+          "referrer": "", // no referer header
+          "referrerPolicy": "no-referrer",// "strict-origin-when-cross-origin",
+          "body": JSON.stringify(requestObj),
+          "method": "POST",
+          "mode": "cors",
+          //"credentials": "include"
         }).then(resp => resp.json()).then(result => {
           if(result){
             if(result.fault){
@@ -558,7 +621,8 @@ $(document).ready(function() {
       // Contributions
       asset.contributions.percentage = truthyVal(asset.contributions.percentage)
       asset.contributions.amount = numberVal(asset.contributions.amount, 0, asset.contributions.percentage ? 100 : 999999999)
-      if(!asset.contributions.amount) delete asset.contributions;
+      asset.contributions.employerAmount = numberVal(asset.contributions.employerAmount, 0, asset.contributions.percentage ? 100 : 999999999)
+      if(asset.contributions.amount + asset.contributions.employerAmount <= 0) delete asset.contributions;
       else asset.contributions.increase.rate = numberVal(asset.contributions.increase.rate, -100, 100)
       
       // Initial Charges
@@ -711,6 +775,7 @@ $(document).ready(function() {
     }
     requestObj.forecastOptions.terms = new Array(requestObj.forecastOptions.terms.to-requestObj.forecastOptions.terms.from+1).fill().map((e, i) => requestObj.forecastOptions.terms.from + i);
     requestObj.forecastOptions.percentiles = requestObj.forecastOptions.percentiles.replace('%','').split(',').map(v=>numberVal(v,0,100,50)).filter((p,i,arr) => arr.indexOf(p) == i).sort((a,b)=>a>b?1:-1);
+    requestObj.forecastOptions.todaysPrices = truthyVal(requestObj.forecastOptions.todaysPrices)
 
     // Properties
     requestObj.properties = objToArray($.extend({},formObj.properties));
@@ -751,6 +816,25 @@ $(document).ready(function() {
 
     // Other incomes
     requestObj.otherIncomes = objToArray($.extend({},formObj.otherIncomes));
+    for(let i = requestObj.otherIncomes.length-1;i>=0;i--){
+      let income = requestObj.otherIncomes[i];
+      income.value = numberVal(income.value, 0, 10000000)
+      income.increase.rate = numberVal(income.increase.rate, -100, 100)
+      income.startAge = numberVal(income.startAge,55,99);
+      if(!income.startAge) income.startAge = requestObj.forecastOptions.retirementAge;
+      income.endAge = numberVal(income.endAge,55,99);
+      if(income.endAge && income.endAge < income.startAge) return {err:"Income end age must not be less than income start age"}
+      let dob = new Date(requestObj.user.dateOfBirth), startDate = dateDiff(dob,income.startAge)
+      income.startDate = startDate.toISOString().split('T')[0];
+      if(income.endAge){
+        let endDate = dateDiff(dob,income.endAge)
+        income.endDate = endDate.toISOString().split('T')[0];
+      }
+      delete income.startAge
+      delete income.endAge
+      income.taxEligible = truthyVal(income.taxEligible);
+    }
+    requestObj.otherIncomes = requestObj.otherIncomes.filter(i=>i.value>=1);
     if(!requestObj.otherIncomes.length) delete requestObj.otherIncomes;
 
     // Targets
@@ -921,7 +1005,7 @@ $(document).ready(function() {
               seriesname: res.percentile+"th percentile",
               renderas: "line",
               color: "#5d62b5",
-              alpha: 100-95*Math.pow(Math.abs(res.percentile-50)/pcRange,1/4),
+              alpha: 100-(result.results.length > 3 ? 90 : 40)*Math.pow(Math.abs(res.percentile-50)/pcRange,1/4),
               data: res.terms.map((proj,i)=>{
                 return {value: proj.value || proj.value===0 ? proj.value : null};
               })
